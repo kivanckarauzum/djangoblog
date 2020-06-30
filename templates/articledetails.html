@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block yazı %}
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <!-- Post Content Column -->
+    <div class="col-lg-12">
+
+      <!-- Title -->
+      <h1 class="mt-5">{{article.title}}</h1>
+
+      <!-- Author -->
+      <p class="lead">
+        {{article.author}} <br> tarafından hazırlandı
+      </p>
+      <hr>
+
+      <!-- Date/Time -->
+      <p>{{article.created_date}}</p>
+      <hr>
+      <!-- Preview Image -->
+      {% if article.article_image %}
+      <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+      {% endif %}
+      
+
+      <!-- Post Content -->
+      <p class="lead">
+        {{article.content|safe}}
+      </p>
+      <hr>
+
+      <div class="card my-4">
+        <h5 class="card-header">Yorum Ekle</h5>
+        <div class="card-body">
+          <form method=POST action = "{% url 'article:addcomment' article.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="exampleFormControlInput1">Kullanıcı Adı</label>
+            <input name ="comment_author" class="form-control" id="exampleFormControlInput1" >
+            </div>
+
+
+            <div class="form-group">
+            <label for="exampleFormControlInput1">Yorum</label>
+              <textarea name ="comment_content" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-secondary">Ekle</button>
+          </form>
+        </div>
+      </div>
+      <br>
+      <br>
+    {% if comments %}
+    {% for comment in comments %}
+    <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+          <h5 class="mt-0">{{comment.comment_author}}</h5>
+          {{comment.comment_content}} <br>
+          <p align=right>{{comment.comment_created_date}}</p>
+        </div>
+      </div>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+      
+
+  </div>
+  </div>
+{% endblock yazı %}

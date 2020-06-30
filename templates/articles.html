@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags%}
+{% block başlık %}
+<div class="row">
+<div class="col-md-10 offset-md-0">
+<h2>Makaleler</h2>
+<hr>
+</div>
+</div>
+{% endblock başlık %}
+{% block yazı %}
+<div class="row">
+  <div class="col-md-10 offset-md-0">
+<!-- Search form -->
+<form>
+  {% csrf_token %}
+<input class="form-control" name= "keyword" type="text" placeholder="Ara" aria-label="ara">
+</form>
+<br>
+  
+    {% for article in articles  %}
+    <tr>
+        <h2>{{article.title}}</h2>
+        <br>
+        <div>{{article.content|safe|truncatewords:35}}</div>
+        <a class="btn btn-outline-danger" href="{% url 'article:articledetails' article.id %}">devamını oku</a>
+        <br>
+        yazar: {{article.author}}    
+    </tr>
+    {% endfor %}
+</div>
+</div>
+{% endblock yazı %}

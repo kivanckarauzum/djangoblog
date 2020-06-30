@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block başlık %}
+<h2 align=center>Giriş Yap</h2>
+<hr>
+{% endblock başlık %} 
+{% block yazı %}
+{% load crispy_forms_tags %}
+<div class="row">
+<div class="col-md-4 offset-md-4">
+<form method=post align=center>
+{% csrf_token %}
+{{form|crispy}}
+<button class="btn btn-success" align=center>Giriş</button>
+</form>
+</div>
+</div>
+
+{% endblock yazı %}
